@@ -1,0 +1,28 @@
+{
+  "name": "poacher",
+  "description": "Karoo Poacher: a screenshot maker",
+  "main": "main.js",
+  "authors": [
+    "enterdev"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Screenshot"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "paper": "^0.10.2",
+    "toastr": "^2.1.3",
+    "jquery": "^3.1.1",
+    "file-saver": "^1.3.3",
+    "mousetrap": "^1.6.0",
+    "storage-wrap": "^1.0.2"
+  }
+}

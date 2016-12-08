@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Karoo Poacher Settings</title>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <!-- FIXME: load modules in a more sensible way -->
+    <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="./bower_components/mousetrap/mousetrap.min.js"></script>
+    <script src="./bower_components/storage-wrap/src/storage-wrap.js"></script>
+    <script>if (window.module) module = window.module;</script>
+    <style>
+        html, body
+        {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background: white;
+        }
+        form
+        {
+            width: 500px; margin: auto; padding-top: 20px;
+        }
+        label
+        {
+            display: block; margin-top: 10px;
+        }
+        label > span
+        {
+            display: inline-block; width: 125px;
+        }
+        label > select, label > input
+        {
+            width: 370px; box-sizing: border-box;
+            height: 30px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        label > input
+        {
+            width: 370px; box-sizing: border-box;
+            height: 30px;
+            padding-left: 7px;
+            padding-right: 7px;
+        }
+        div.buttons
+        {
+            margin-top: 20px;
+            text-align: right;
+        }
+        div.buttons > button
+        {
+            min-width: 70px;
+            height: 40px;
+            background: white;
+            border: 1px solid grey;
+        }
+        div.buttons > button:hover
+        {
+            background: #fafafa;
+        }
+    </style>
+    <script>
+
+        $(function()
+        {
+            let settings = storageWrap.getItem('settings');
+            let $cloudProvider = $('#cloudProvider');
+            let $cloudProviderOptions = $('#tokenRow, #urlRow');
+            let $url = $('#url');
+            let $token = $('#token');
+            function processAdditionalFields(cloudProvider)
+            {
+                if ((cloudProvider != null) && (cloudProvider != "none"))
+                {
+                    if (settings && settings.cloudProviderSettings &&
+                        settings.cloudProviderSettings[cloudProvider] &&
+                        settings.cloudProviderSettings[cloudProvider].url)
+                        $url.val(settings.cloudProviderSettings[cloudProvider].url);
+                    else
+                        $url.val('');
+                    if (settings && settings.cloudProviderSettings &&
+                        settings.cloudProviderSettings[cloudProvider] &&
+                        settings.cloudProviderSettings[cloudProvider].token)
+                        $token.val(settings.cloudProviderSettings[cloudProvider].token);
+                    else
+                        $token.val('');
+
+                    if (cloudProvider == 'karoo')
+                        $url.attr('placeholder', 'http://aura.karoo.io/server/inventory/file/upload');
+                    else if (cloudProvider == 'imgur')
+                        $url.attr('placeholder', 'https://api.imgur.com/3/image');
+
+                    $cloudProviderOptions.show();
+                }
+                else
+                    $cloudProviderOptions.hide();
+            }
+
+            if (settings != null)
+            {
+                $cloudProvider.val(settings.cloudProvider);
+                processAdditionalFields(settings.cloudProvider);
+            }
+
+            $cloudProvider.on('change', function() { processAdditionalFields($cloudProvider.val()); });
+
+            $('#ok').on('click', function()
+            {
+                switch ($cloudProvider.val())
+                {
+                    case 'karoo':
+                    case 'imgur':
+                        if (!settings)
+                            settings = {cloudProviderSettings: {}};
+                        settings.cloudProviderSettings[$cloudProvider.val()] = {
+                            url: $url.val(),
+                            token: $token.val()
+                        };
+                        settings.cloudProvider = $cloudProvider.val();
+                        break;
+                    case 'none':
+                        settings.cloudProvider = $cloudProvider.val();
+                        break;
+                }
+
+                storageWrap.setItem('settings', settings);
+
+                require('electron').remote.getCurrentWindow().close();
+
+                return false
+            });
+            $('#cancel').on('click', function()
+            {
+                require('electron').remote.getCurrentWindow().close();
+                return false
+            });
+        });
+    </script>
+</head>
+<body>
+<form>
+    <label><span >Cloud Provider:</span>
+        <select id="cloudProvider">
+            <option value="none">None</option>
+            <option value="karoo">Karoo</option>
+            <option value="imgur">Imgur</option>
+        </select>
+    </label>
+    <div style="height: 70px; border-top: 1px solid white;border-bottom: 1px solid white;">
+        <label id="tokenRow" style="display: none;"><span>Token:</span>
+            <input id="token">
+        </label>
+
+        <label id="urlRow" style="display: none;"><span>URL:</span>
+            <input id="url">
+        </label>
+    </div>
+
+    <div class="buttons">
+        <button id="ok">OK</button>
+        <button id="cancel">Cancel</button>
+    </div>
+</form>
+</body></html>

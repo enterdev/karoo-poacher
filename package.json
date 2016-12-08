@@ -1,0 +1,44 @@
+{
+    "name": "karoo-poacher",
+    "productName": "Karoo Poacher",
+    "version": "0.0.1",
+    "description": "Karoo Poacher: a screenshot maker",
+    "homepage": "http://karoo.io",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "pack": "bower install && build --dir",
+        "dist": "bower install && build",
+        "install": "npm rebuild --runtime=electron --target=1.4.10 --disturl=https://atom.io/download/atom-shell --abi=50",
+        "postinstall": "bower install"
+    },
+    "keywords": [
+        "Screenshot"
+    ],
+    "author": "enterdev",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/jquery": "^2.0.34",
+        "@types/mousetrap": "*",
+        "@types/paper": "*",
+        "@types/toastr": "*",
+        "electron": "^1.4.10",
+        "electron-builder": "^10.5.0",
+        "npm-platform-dependencies": "*"
+    },
+    "dependencies": {
+        "file-saver": "*",
+        "cli-fullscreen-screenshot": "https://github.com/enterdev/cli-fullscreen-screenshot.git"
+    },
+    "darwinDependencies": {
+        "nodobjc": "*"
+    },
+    "build": {
+        "appId": "io.karoo.poacher",
+        "win": {},
+        "mac": {
+            "category": "public.app-category.utilities"
+        },
+        "asar": false
+    }
+}
