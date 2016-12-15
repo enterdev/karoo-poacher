@@ -3,6 +3,7 @@ const app            = electron.app;
 const globalShortcut = electron.globalShortcut;
 const BrowserWindow  = electron.BrowserWindow;
 const Tray           = electron.Tray;
+const Menu           = electron.Menu;
 const path           = require('path');
 const url            = require('url');
 const isOSX          = /^darwin/.test(process.platform);
@@ -12,7 +13,6 @@ let mainWindow     = null;
 let settingsWindow = null;
 
 app.disableHardwareAcceleration();
-
 
 function createMainWindow()
 {
@@ -81,7 +81,26 @@ function createSettingsWindow()
             transparent: false,
             show:        true,
         });
-        settingsWindow.setMenu(null);
+
+        if (!isOSX)
+            settingsWindow.setMenu(null);
+        else
+        {
+            let template = [{
+                label: 'Edit',
+                submenu: [
+                    { label: 'Undo', accelerator: 'CmdOrCtrl+Z', selector: 'undo:' },
+                    { label: 'Redo', accelerator: 'Shift+CmdOrCtrl+Z', selector: 'redo:' },
+                    { type: 'separator' },
+                    { label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'cut:' },
+                    { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
+                    { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
+                    { label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' }
+                ]}
+            ];
+
+            Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+        }
 
         settingsWindow.loadURL(url.format({
             pathname: path.join(__dirname, 'settings.html'),
