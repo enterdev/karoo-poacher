@@ -44,21 +44,7 @@ namespace karoo.poacher
 
             this.exportCanvas = document.createElement('CANVAS') as HTMLCanvasElement;
 
-            let settings = (window as any).storageWrap.getItem('settings');
-
-            if ((settings.cloudProvider != null) && (settings.cloudProvider != "none"))
-            {
-                if (settings.cloudProvider == 'karoo')
-                    this.cloudUploadProvider = new karoo.poacher.cloud_upload_providers.Karoo(
-                        settings['cloudProviderSettings'][settings.cloudProvider].token,
-                        settings['cloudProviderSettings'][settings.cloudProvider].url
-                    );
-                else if (settings.cloudProvider == 'imgur')
-                    this.cloudUploadProvider = new karoo.poacher.cloud_upload_providers.Imgur(
-                        settings['cloudProviderSettings'][settings.cloudProvider].token,
-                        settings['cloudProviderSettings'][settings.cloudProvider].url
-                    );
-            }
+            this.loadCloudProviderSettings();
         }
 
         public takeScreenshot()
@@ -230,6 +216,8 @@ namespace karoo.poacher
             this.exportResult();
             this.hideWindow();
 
+            this.loadCloudProviderSettings();
+
             if (!this.cloudUploadProvider)
                 return;
 
@@ -360,6 +348,25 @@ namespace karoo.poacher
 
             //TODO: do we also need to check for Command+Q on mac?
             Mousetrap.bind('alt+f4', function () { return false; });
+        }
+
+        private loadCloudProviderSettings()
+        {
+            let settings = (window as any).storageWrap.getItem('settings');
+
+            if ((settings.cloudProvider != null) && (settings.cloudProvider != "none"))
+            {
+                if (settings.cloudProvider == 'karoo')
+                    this.cloudUploadProvider = new karoo.poacher.cloud_upload_providers.Karoo(
+                        settings['cloudProviderSettings'][settings.cloudProvider].token,
+                        settings['cloudProviderSettings'][settings.cloudProvider].url
+                    );
+                else if (settings.cloudProvider == 'imgur')
+                    this.cloudUploadProvider = new karoo.poacher.cloud_upload_providers.Imgur(
+                        settings['cloudProviderSettings'][settings.cloudProvider].token,
+                        settings['cloudProviderSettings'][settings.cloudProvider].url
+                    );
+            }
         }
     }
 }
