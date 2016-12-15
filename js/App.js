@@ -41,34 +41,6 @@ var karoo;
                 var screenshotConfig = {
                     outfile: screenshotFilename
                 };
-                //on OSX we need to pass screen params to the backend tool
-                if (this.isOSX) {
-                    var minX = Number.MAX_VALUE;
-                    var minY = Number.MAX_VALUE;
-                    var maxX = Number.MIN_VALUE;
-                    var maxY = Number.MIN_VALUE;
-                    var screens = this.electron.screen.getAllDisplays();
-                    var configScreens = [];
-                    for (var i = 0; i < screens.length; i++) {
-                        var bounds = screens[i].bounds;
-                        if (bounds.x < minX)
-                            minX = bounds.x;
-                        if (bounds.y < minY)
-                            minY = bounds.y;
-                        if (bounds.x + bounds.width > maxX)
-                            maxX = bounds.x + bounds.width;
-                        if (bounds.y + bounds.height > maxY)
-                            maxY = bounds.y + bounds.height;
-                        configScreens.push({ x: bounds.x, y: bounds.y, w: bounds.width, h: bounds.height });
-                    }
-                    screenshotConfig['screenParams'] = {
-                        canvas: { w: maxX - minX, h: maxY - minY /*w: 3760, h: 1920*/ },
-                        screens: configScreens /*[
-                         { x: 0, y: 0, w: 2560, h: 1440 },
-                         { x: 2560, y: 0, w: 1200, h: 1920 }
-                         ]*/
-                    };
-                }
                 new this.screenshotTool.Screenshot(screenshotConfig, function (error /*, complete*/) {
                     if (error) {
                         console.log('Screenshot failed', error);
