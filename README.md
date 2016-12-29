@@ -7,21 +7,22 @@ Why another one? For fun, to try out a new tech, to be open-source, simple, modu
 Start, the app
 
 1. Windows:
-* Press PrintScreen to take a screenshot
-* Select the area you're interested in
-* Arrow tool will be enabled, drag to draw arrows if needed
-* Press Ctrl+C to copy image to clipboard
-* Press Ctrl+D to upload image to cloud (imgur by default) and copy image the link clipboard
-* Press Ctrl+R to clear and restart clipping and drawing
-* Press Esc to cancel
+ 1. Press PrintScreen to take a screenshot
+ 2. Select the area you're interested in
+ 3. Arrow tool will be enabled, drag to draw arrows if needed
+ 4. Press Ctrl+C to copy image to clipboard
+ 5. Press Ctrl+D to upload image to cloud (imgur by default) and copy image the link clipboard
+ 6. Press Ctrl+R to clear and restart clipping and drawing
+ 7. Press Esc to cancel
+
 2. OSX:
-* Press Command+P to take a screenshot
-* Select the area you're interested in
-* Arrow tool will be enabled, drag to draw arrows if needed
-* Press Command+C to copy image to clipboard
-* Press Command+D to upload image to cloud (imgur by default) and copy image the link clipboard
-* Press Command+R to clear and restart clipping and drawing
-* Press Esc to cancel
+ 1. Press Command+P to take a screenshot
+ 2. Select the area you're interested in
+ 3. Arrow tool will be enabled, drag to draw arrows if needed
+ 4. Press Command+C to copy image to clipboard
+ 5. Press Command+D to upload image to cloud (imgur by default) and copy image the link clipboard
+ 6. Press Command+R to clear and restart clipping and drawing
+ 7. Press Esc to cancel
 
 #Nerd corner:
 ##TODO 
