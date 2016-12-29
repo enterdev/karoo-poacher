@@ -13,6 +13,7 @@ let mainWindow     = null;
 let settingsWindow = null;
 
 app.disableHardwareAcceleration();
+app.commandLine.appendSwitch('disable-renderer-backgrounding');
 
 function createMainWindow()
 {
