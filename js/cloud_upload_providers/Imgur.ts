@@ -5,10 +5,10 @@ namespace karoo.poacher.cloud_upload_providers
         public url;
         public token;
 
-        constructor(token, url = null)
+        constructor(token = null, url = null)
         {
             this.url   = url || 'https://api.imgur.com/3/image';
-            this.token = token;
+            this.token = token || 'a3fcae624953033';
         }
 
         public submit(data)

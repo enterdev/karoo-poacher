@@ -93,7 +93,7 @@ namespace karoo.poacher.tools
         protected onMouseDrag = (event) =>
         {
             let w = event.point.x - this.startX;
-            if (w == 0)
+            if (w === 0)
                 w = 1;
             if (w > 0)
             {
@@ -109,7 +109,7 @@ namespace karoo.poacher.tools
             }
 
             let h = event.point.y - this.startY;
-            if (h == 0)
+            if (h === 0)
                 h = 1;
             if (h > 0)
             {

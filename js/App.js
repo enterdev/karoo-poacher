@@ -250,10 +250,15 @@ var karoo;
             };
             ScreenshotApp.prototype.loadCloudProviderSettings = function () {
                 var settings = window.storageWrap.getItem('settings');
-                if ((settings.cloudProvider != null) && (settings.cloudProvider != "none")) {
-                    if (settings.cloudProvider == 'karoo')
+                if (settings === null) {
+                    settings = { cloudProvider: 'imgur' };
+                    settings['cloudProviderSettings'] = {};
+                    settings['cloudProviderSettings'][settings.cloudProvider] = {};
+                }
+                if ((settings.cloudProvider !== null) && (settings.cloudProvider !== "none")) {
+                    if (settings.cloudProvider === 'karoo')
                         this.cloudUploadProvider = new karoo.poacher.cloud_upload_providers.Karoo(settings['cloudProviderSettings'][settings.cloudProvider].token, settings['cloudProviderSettings'][settings.cloudProvider].url);
-                    else if (settings.cloudProvider == 'imgur')
+                    else if (settings.cloudProvider === 'imgur')
                         this.cloudUploadProvider = new karoo.poacher.cloud_upload_providers.Imgur(settings['cloudProviderSettings'][settings.cloudProvider].token, settings['cloudProviderSettings'][settings.cloudProvider].url);
                 }
             };

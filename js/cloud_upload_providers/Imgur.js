@@ -6,9 +6,10 @@ var karoo;
         (function (cloud_upload_providers) {
             var Imgur = (function () {
                 function Imgur(token, url) {
+                    if (token === void 0) { token = null; }
                     if (url === void 0) { url = null; }
                     this.url = url || 'https://api.imgur.com/3/image';
-                    this.token = token;
+                    this.token = token || 'a3fcae624953033';
                 }
                 Imgur.prototype.submit = function (data) {
                     var p = new jQuery.Deferred();

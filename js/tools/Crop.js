@@ -44,7 +44,7 @@ var karoo;
                     };
                     this.onMouseDrag = function (event) {
                         var w = event.point.x - _this.startX;
-                        if (w == 0)
+                        if (w === 0)
                             w = 1;
                         if (w > 0) {
                             _this.area1.bounds.width = w;
@@ -57,7 +57,7 @@ var karoo;
                             _this.area2.bounds.width = w * -1;
                         }
                         var h = event.point.y - _this.startY;
-                        if (h == 0)
+                        if (h === 0)
                             h = 1;
                         if (h > 0) {
                             _this.area1.bounds.height = h;

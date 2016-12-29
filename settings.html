@@ -69,7 +69,7 @@
             let $token = $('#token');
             function processAdditionalFields(cloudProvider)
             {
-                if ((cloudProvider != null) && (cloudProvider != "none"))
+                if ((cloudProvider !== null) && (cloudProvider !== "none"))
                 {
                     if (settings && settings.cloudProviderSettings &&
                         settings.cloudProviderSettings[cloudProvider] &&
@@ -84,10 +84,13 @@
                     else
                         $token.val('');
 
-                    if (cloudProvider == 'karoo')
+                    if (cloudProvider === 'karoo')
                         $url.attr('placeholder', 'http://aura.karoo.io/server/inventory/file/upload');
-                    else if (cloudProvider == 'imgur')
+                    else if (cloudProvider === 'imgur')
+                    {
+                        $token.attr('placeholder', 'a3fcae624953033');
                         $url.attr('placeholder', 'https://api.imgur.com/3/image');
+                    }
 
                     $cloudProviderOptions.show();
                 }
@@ -95,8 +98,14 @@
                     $cloudProviderOptions.hide();
             }
 
-            if (settings != null)
+            if (settings !== null)
             {
+                $cloudProvider.val(settings.cloudProvider);
+                processAdditionalFields(settings.cloudProvider);
+            }
+            else
+            {
+                settings = {cloudProvider: 'imgur'};
                 $cloudProvider.val(settings.cloudProvider);
                 processAdditionalFields(settings.cloudProvider);
             }
