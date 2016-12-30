@@ -76,7 +76,8 @@ var karoo;
                             Math.round(_this.area1.bounds.x),
                             Math.round(_this.area1.bounds.y),
                             Math.round(_this.area1.bounds.width),
-                            Math.round(_this.area1.bounds.height)];
+                            Math.round(_this.area1.bounds.height)
+                        ];
                         $('body').css('cursor', 'default');
                         _this._onMouseUp.trigger();
                     };
