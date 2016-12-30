@@ -85,7 +85,10 @@
                         $token.val('');
 
                     if (cloudProvider === 'karoo')
+                    {
+                        $token.attr('placeholder', '');
                         $url.attr('placeholder', 'http://aura.karoo.io/server/inventory/file/upload');
+                    }
                     else if (cloudProvider === 'imgur')
                     {
                         $token.attr('placeholder', 'a3fcae624953033');
@@ -118,8 +121,10 @@
                 {
                     case 'karoo':
                     case 'imgur':
-                        if (!settings)
+                        if (typeof settings === "undefined" || settings === null)
                             settings = {cloudProviderSettings: {}};
+                        if (typeof settings.cloudProviderSettings === "undefined")
+                            settings.cloudProviderSettings = {};
                         settings.cloudProviderSettings[$cloudProvider.val()] = {
                             url: $url.val(),
                             token: $token.val()

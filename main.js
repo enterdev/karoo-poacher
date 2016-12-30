@@ -82,6 +82,7 @@ function createSettingsWindow()
             transparent: false,
             show:        true,
         });
+        //settingsWindow.webContents.openDevTools();
 
         if (!isOSX)
             settingsWindow.setMenu(null);
