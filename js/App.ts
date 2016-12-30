@@ -158,6 +158,10 @@ namespace karoo.poacher
                     }
                 });
             }
+
+            //FIXME: this is very non-obvious thing right here. not immediate means it's not ensuring closing after open
+            if (!isImmediate)
+                this.runGarbageCollector();
         }
 
         private setUpCanvas()
@@ -372,6 +376,26 @@ namespace karoo.poacher
                         settings['cloudProviderSettings'][settings.cloudProvider].token,
                         settings['cloudProviderSettings'][settings.cloudProvider].url
                     );
+            }
+        }
+
+        //noinspection JSMethodCanBeStatic
+        private runGarbageCollector()
+        {
+            const fs    = require('fs');
+            const path  = require('path');
+            const dirPath = path.join(__dirname, '/tmp/');
+            let files   = [];
+            try { files = fs.readdirSync(dirPath); }
+            catch (e) { return; }
+
+            for (let i = 0; i < files.length; i++)
+            {
+                if ((files[i] === '.gitignore') || (files[i] === 'demo.png'))
+                    continue;
+                let filePath = dirPath + '/' + files[i];
+                if (fs.statSync(filePath).isFile())
+                    fs.unlinkSync(filePath);
             }
         }
     }

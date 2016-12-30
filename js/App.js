@@ -113,6 +113,9 @@ var karoo;
                         }
                     });
                 }
+                //FIXME: this is very non-obvious thing right here. not immediate means it's not ensuring closing after open
+                if (!isImmediate)
+                    this.runGarbageCollector();
             };
             ScreenshotApp.prototype.setUpCanvas = function () {
                 var canvas = document.getElementById('mainCanvas');
@@ -260,6 +263,26 @@ var karoo;
                         this.cloudUploadProvider = new karoo.poacher.cloud_upload_providers.Karoo(settings['cloudProviderSettings'][settings.cloudProvider].token, settings['cloudProviderSettings'][settings.cloudProvider].url);
                     else if (settings.cloudProvider === 'imgur')
                         this.cloudUploadProvider = new karoo.poacher.cloud_upload_providers.Imgur(settings['cloudProviderSettings'][settings.cloudProvider].token, settings['cloudProviderSettings'][settings.cloudProvider].url);
+                }
+            };
+            //noinspection JSMethodCanBeStatic
+            ScreenshotApp.prototype.runGarbageCollector = function () {
+                var fs = require('fs');
+                var path = require('path');
+                var dirPath = path.join(__dirname, '/tmp/');
+                var files = [];
+                try {
+                    files = fs.readdirSync(dirPath);
+                }
+                catch (e) {
+                    return;
+                }
+                for (var i = 0; i < files.length; i++) {
+                    if ((files[i] === '.gitignore') || (files[i] === 'demo.png'))
+                        continue;
+                    var filePath = dirPath + '/' + files[i];
+                    if (fs.statSync(filePath).isFile())
+                        fs.unlinkSync(filePath);
                 }
             };
             return ScreenshotApp;
